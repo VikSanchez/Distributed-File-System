@@ -1,14 +1,45 @@
-def main():
-    try:
-        if len(sys.argv) > 1 and sys.argv[1].isdigit():
-            port = int(sys.argv[1])
-            server = DirectoryServer(port)
-        else:
-            server = DirectoryServer()
-        server.listen()
-    except socket.error, msg:
-        print "Unable to create socket connection: " + str(msg)
-        con = None
+import socket, pickle
+from threading import Thread
+import threading
+import os
+
+def get_list(name,sock):
+    current_working_directory = os.getcwd()
+    os.chdir(current_working_directory)
+    files =[]
+    d1=[]
+    files = os.listdir(current_working_directory)
+    f_name = sock.recv(2048)        
+    if f_name in files:
+        i=files.index(f_name)
+        data = current_working_directory+f_name+' Size '+str(os.path.getsize(files[i]))+' Bytes  Last modified ' +str(os.path.getctime(files[i]))      
+    else:
+        data = 'File does not exist'
+    data1 = data.encode()
+    sock.send(data1)
+    
 
 
-if __name__ == "__main__": main()
+def Main():
+    host = '127.0.0.1'
+    port = 5000
+    s = socket.socket()
+    s.bind(('',port))
+    s.listen(5)
+    print('server started')
+    while(True):
+        c,addr = s.accept()
+        print('client connected ip:'+str(addr))
+        t= threading.Thread(target= get_list('get_list',c))
+        t.start()
+if __name__ == '__main__':
+    Main()
+
+
+        
+
+    
+
+
+
+    
