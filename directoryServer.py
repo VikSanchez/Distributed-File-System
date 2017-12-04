@@ -3,7 +3,26 @@ from threading import Thread
 import threading
 import os
 
+
+class client_thread(Thread):
+
+       def __init__(self,addr,c):
+              Thread.__init__(self)
+              self.addr = addr
+              self.c = c
+
+       def run(self):
+              while True:
+                     get_list(self.addr,self.c)
+              
 def get_list(name,sock):
+    f_name = (sock.recv(2048)).decode()
+    info = (sock.recv(2048)).decode()
+    f = open(f_name,"w+")
+    f.write(info)
+    print('done')
+    f.close()
+    
     current_working_directory = os.getcwd()
     os.chdir(current_working_directory)
     files =[]
