@@ -21,6 +21,24 @@ def authentication():
     else:
         print 'Username already exists'
         authentication()
+        
+ def directory():    
+    inp = raw_input('Type 1 to create a new file, and 2 to access existing file ')
+    if inp == '1':
+        f_name = raw_input('enter file name ')        
+        info = raw_input('Write data into file: ')
+        socket_dir.send(f_name.encode())
+        socket_dir.send(info.encode())
+        
+        data = socket_dir.recv(2048)
+        files = pickle.loads(data)
+        directory()
+    else:
+        file_name = raw_input("Enter File Name, type exit to terminate: ")
+        socket_dir.send(file_name.encode())    
+        data = socket_dir.recv(2048)
+        data1 = data.decode()
+        print data1
 
 if __name__ == '__main__':
    
