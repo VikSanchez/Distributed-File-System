@@ -19,7 +19,7 @@ class client_thread(Thread):
 
 def lock(name,c):
     conn = sqlite3.connect('test.db')
-    print "Opened database successfully";
+    print "Opened database."
     d_f=[]
     d_s=[]
     file_name = c.recv(1024)
@@ -53,9 +53,21 @@ def lock(name,c):
            cursor = conn.execute("UPDATE files_list SET status = 'unlocked' WHERE file_name = (?)",(f_name,))
            conn.commit()
     
-        
+def Main():
+    host = '127.0.0.1'
+    port = 5003
+    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    s.bind(('',port))
+    s.listen(5)
+
+    
+    print('server started')
+    while(True):
+        (c,addr) = s.accept()
+        print('client connected ip:'+str(addr))
+        Thread = client_thread(addr,c)
+        Thread.start()
+   
 
 if __name__ == '__main__':
     lock()
-    
-    
