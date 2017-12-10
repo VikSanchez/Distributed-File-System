@@ -40,7 +40,7 @@ def auth_server(name,c):
                      val = 'true'
               else:
                      val = 'false'
-       if inp == '2':
+       elif inp == '2':
               cursor = conn.execute("SELECT username from data")
               for row in cursor:                     
                      u = row[0]
@@ -61,7 +61,7 @@ def auth_server(name,c):
 
 def Main():
     host = '127.0.0.1'
-    port = 5009
+    port = 5010
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.bind(('',port))
     s.listen(5)
