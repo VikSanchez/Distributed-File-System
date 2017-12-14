@@ -121,3 +121,8 @@ if __name__ == '__main__':
     port_lock = 6002
     socket_lock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     socket_lock.connect((host, port_lock))
+    
+    port_authen = 5009
+    socket_authen = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket_authen.connect((host, port_authen))
+    authentication()
