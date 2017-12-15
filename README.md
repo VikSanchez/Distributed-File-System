@@ -1,4 +1,5 @@
-# ScalableAssignment2
+Distributed-File-System Task
+
 Distributed File System using Sockets with Server and Client.
 Implements Locking, Authentication, File Server and Directory Server
 
